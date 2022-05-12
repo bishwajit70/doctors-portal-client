@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init'
 import Loading from '../Shared/Loading/Loading';
 
 const Signup = () => {
     const navigate = useNavigate()
+    const location = useLocation()
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [
@@ -14,23 +15,31 @@ const Signup = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     let signUpErrorMessage;
 
+    let from = location.state?.from?.pathname || '/';
+
+    // let from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        if (user || googleUser) {
+            navigate(from, { replace: true });
+        }
+    }, [user, googleUser, from, navigate])
+
     if (loading || googleLoading || updating) {
         return <Loading></Loading>
     }
+
     if (error || googleError || updateError) {
         signUpErrorMessage = <p className='text-red-500'>{error?.message || googleError?.message}</p>
     }
 
-    if (googleUser) {
-        console.log(user)
-    }
-    
+
     const onSubmit = async data => {
         console.log(data)
         await createUserWithEmailAndPassword(data.email, data.password)
@@ -39,6 +48,7 @@ const Signup = () => {
         navigate('/appointment')
 
     };
+
     return (
         <div className='flex h-screen justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">

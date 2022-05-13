@@ -9,6 +9,7 @@ import ContactUs from './Pages/ContactUs/ContactUs';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Login/SignUp';
 import RequireAuth from './Pages/Login/RequireAuth/RequireAuth';
+import ResetPassword from './Pages/Login/ResetPassword';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="resetpassword" element={<ResetPassword />} />
 
       </Routes>
     </div>

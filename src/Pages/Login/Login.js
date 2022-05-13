@@ -23,6 +23,8 @@ const Login = () => {
 
     // let from = location.state?.from?.pathname || "/";
 
+    // const email = document.getElementById('email')
+
     useEffect(() => {
         if (user || googleUser) {
             navigate(from, { replace: true });
@@ -42,10 +44,6 @@ const Login = () => {
         signInWithEmailAndPassword(data.email, data.password)
 
     };
-
-
-
-
 
     return (
         <div className='flex h-screen justify-center items-center'>
@@ -112,6 +110,8 @@ const Login = () => {
                         {signInErrorMessage}
                         <input className='btn w-full max-w-xs' type="submit" value='Login' />
                     </form>
+
+                    <p>Forgot Password? <Link className='text-primary' to='/resetpassword'>Reset Password</Link></p>
 
                     <p>New to Doctors Portal?  <Link to='/signup' className='text-secondary'>Create New Account</Link></p>
 

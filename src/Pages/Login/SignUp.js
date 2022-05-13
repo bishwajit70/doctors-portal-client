@@ -23,13 +23,9 @@ const Signup = () => {
 
     let from = location.state?.from?.pathname || '/';
 
-    // let from = location.state?.from?.pathname || "/";
-
-    useEffect(() => {
-        if (user || googleUser) {
-            navigate(from, { replace: true });
-        }
-    }, [user, googleUser, from, navigate])
+    if (user || googleUser) {
+        navigate(from, { replace: true });
+    }
 
     if (loading || googleLoading || updating) {
         return <Loading></Loading>

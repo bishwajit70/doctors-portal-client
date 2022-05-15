@@ -28,7 +28,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
         }
         // console.log(booking);
 
-        fetch('http://localhost:5000/booking', {
+        fetch('https://glacial-temple-64740.herokuapp.com/booking', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -37,7 +37,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
         })
             .then(res => res.json())
             .then(data => {
-               
+
                 if (data.success) {
                     toast(`Appointment is set ${formattedDate} at ${slot}`)
                 } else {
